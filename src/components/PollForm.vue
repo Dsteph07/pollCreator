@@ -12,22 +12,28 @@
 
 <script setup lang="ts">
 
-import {ref, defineEmits} from 'vue';
+import {ref, defineEmits, defineProps} from 'vue';
 
 const emit=defineEmits(['addPoll']);
 
 const tit=ref('');
 const option=ref('');
-const length=ref('');
+let length=0;
 const options=ref([]);
+
+const props=defineProps<{
+    id:number
+}>()
 
 
 
 function addOption(option: String){
     const opt={
         description:option,
+        optionId:length,
         votes:0,
     }
+    length++;
     options.value.push(opt)
 }
 
@@ -35,6 +41,8 @@ function addPoll(){
     const p={
         title:tit,
         numberOfVotes:0,
+        numberOfOptions:length,
+        pollId:props.id,
         options:options,
     }
     emit('addPoll', p);
