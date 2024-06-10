@@ -1,8 +1,7 @@
 <template>
     <div>
         <div v-for="(p,index) in polls" :key="index">
-            <poll v-model:poll="polls[index]" @count-new-vote="countNewVote" @delete-poll="deletePoll"></poll>
-            {{ p }}
+            <poll v-model:poll="polls[index]" :index=index @count-new-vote="countNewVote" @delete-poll="deletePoll" class="poll-div"></poll>
         </div>
         
     </div>
@@ -16,8 +15,7 @@ type pollT={
     title:string;
     numberOfVotes:number;
     numberOfOptions:number
-    pollId:number,
-    options:Array<{description:string, choiceId:number, votes:number}>
+    options:Array<{description:string, choiceId:number, votes:number, color:string}>
 }
 
 
@@ -39,4 +37,8 @@ function deletePoll(poll:pollT){
 
 </script>
 
-<style></style>
+<style>
+#poll-div{
+    background-color: red;
+}
+</style>

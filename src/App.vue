@@ -1,6 +1,6 @@
 <template>
   <header> <h1>Poll Creator</h1></header>
-  <main>
+  <div class="main">
     <div class='formulaire'>
       <pollForm  @addPoll="addPoll" v-model:id="pollCount"></pollForm>
     </div>
@@ -9,13 +9,13 @@
       <pollList v-model:polls="polls" @delete-poll="deletePoll" @count-new-vote="countNewVote"></pollList>
     </div>
 
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
 import {ref, watch, onMounted} from 'vue';
 import pollForm from './components/PollForm.vue';
-import pollList from './components/poleList.vue';
+import pollList from './components/pollList.vue';
 
 const polls=ref([]);
 let pollCount=polls.value.length;
@@ -23,14 +23,12 @@ type poll={
   title:string,
   numberOfVotes:number,
   numberOfOptions:number,
-  pollId:number,
-  options:Array<{description:String, choiceId:number, votes:number}>
+  options:Array<{description:String, choiceId:number, votes:number, color:string}>
 }
 
 function addPoll(poll:poll){
   polls.value.push(poll);
   pollCount+=1;
-  console.log(pollCount);
 }
 
 function deletePoll(poll:poll){
@@ -38,10 +36,13 @@ function deletePoll(poll:poll){
   pollCount--;
 }
 
-function countNewVote(pollId:number, choiceId:number){
-  console.log(polls.value[pollId].options[choiceId].votes);
-  polls.value[pollId].options[choiceId].votes++;
-  polls.value[pollId].numberOfVotes++;
+function countNewVote(pollIndex:number, choiceId:number){
+  if(choiceId!=null){
+    polls.value[pollIndex].options[choiceId].votes++;
+    polls.value[pollIndex].numberOfVotes++;
+  }
+
+  //alert("Thank you for your contribution, your vote has been registered")
 }
 
 
@@ -67,6 +68,10 @@ header {
   top:2%;
   left:30%;
   line-height: 1.5;
+}
+
+.main{
+  display: flex;
 }
 
 .logo {
