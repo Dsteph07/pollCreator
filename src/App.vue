@@ -6,7 +6,7 @@
     </div>
 
     <div class="polls">
-      <pollList v-model:polls="polls" @delete-poll="deletePoll" @count-new-vote="countNewVote"></pollList>
+      <pollList v-model:polls="polls" @delete-poll="deletePoll" @count-new-vote="countNewVote" @confirm-edits="confirmEdits"</pollList>
     </div>
 
   </div>
@@ -43,6 +43,14 @@ function countNewVote(pollIndex:number, choiceId:number){
   }
 
   //alert("Thank you for your contribution, your vote has been registered")
+}
+
+function confirmEdits(newOptions:String[]){
+    let i=0;
+    while(newOptions!=5){
+      console.log(newOptions[i]);
+      i++;
+    }
 }
 
 
